@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.licenses = [%q{MIT}]
   s.require_paths = [%q{lib}]
   s.rubygems_version = %q{1.8.6}
-  s.summary = %q{A DS: fpr generating graphite graph urs.}
+  s.summary = %q{A DSL: for generating graphite graph urls.}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3

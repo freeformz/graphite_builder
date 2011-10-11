@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "graphite_builder"
   gem.homepage = "http://github.com/freeformz/graphite_builder"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %q{A DSL: for generating graphite graph urls.}
+  gem.description =  %q{A DSL for generating graphite graph urls. Meant to enable copy-and-paste from the graphite UI + simple substitution.}
   gem.email = "edward@heroku.com"
   gem.authors = ["Edward Muller"]
   # dependencies defined in Gemfile
