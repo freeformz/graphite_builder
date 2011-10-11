@@ -17,10 +17,9 @@ module Graphite
 
     # args are optional arguments for constructing the url
     # opts are data to retrieve
-    def initialize(args={}, opts=nil, &block)
+    def initialize(args={}, &block)
       @args = args
       @targets = []
-      data opts
       if block
         self.instance_eval(&block)
       end
@@ -28,19 +27,6 @@ module Graphite
 
     def target(value)
       @targets << value
-    end
-
-    def data(opts=nil)
-      case opts
-      when Hash, Array
-        @data = opts
-      when String, Symbol, Fixnum
-        @data[opts]
-      when NilClass
-        @data
-      else
-        raise RuntimeError.new("Unknown options: #{opts}")
-      end
     end
 
     def sumSeries(*args)
