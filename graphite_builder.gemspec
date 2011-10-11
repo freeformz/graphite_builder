@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{Edward Muller}]
-  s.date = %q{2011-10-10}
+  s.date = %q{2011-10-11}
   s.description = %q{A DSL for generating graphite graph urls. Meant to enable copy-and-paste from the graphite UI + simple substitution.}
   s.email = %q{edward@heroku.com}
   s.extra_rdoc_files = [
@@ -19,10 +19,12 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "graphite_builder.gemspec",
     "lib/graphite_builder.rb",
     "test/helper.rb",
     "test/test_graphite_builder.rb"
