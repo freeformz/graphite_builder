@@ -1,9 +1,13 @@
 = graphite_builder
 
-Description goes here.
+DSL thingie for building graphite <img/> tags serverside. Meant
+to help take work done in the grphite UI and convert it to a ruby DSL
+for interpolation.
+
+See the tests for usage for now.
 
 == Contributing to graphite_builder
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
@@ -17,3 +21,6 @@ Description goes here.
 Copyright (c) 2011 Edward Muller. See LICENSE.txt for
 further details.
 
+== TODO
+
+?
