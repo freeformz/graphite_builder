@@ -147,16 +147,32 @@ describe Graphite::Builder do
 
         describe 'an unknown function' do
 
-          it 'should raise an UnknownMethodFormat exception' do
+          it 'should raise an UnknownFunctionSignature exception' do
             Proc.new do
               Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
                 target blargen(1,2,3)
               end.render
-            end.must_raise Graphite::Builder::UnknownMethodFormat
+            end.must_raise Graphite::Builder::UnknownFunctionSignature
           end
 
         end
 
+      end
+
+      describe "some complex graphs" do
+
+        it "should render the correct <img/> tag" do
+
+          Graphite::Builder.new(:hostname => 'foo') do
+            base_url 'http://my_graphite.host/render/'
+            width 800
+            height 200
+            areaMode :stacked
+            from '-2hours'
+            target(legend(color(sumSeries("#{data :hostname}.cpu-*.cpu-steal.value"), :red), 'Steal'))
+            target(legend(color(sumSeries("#{data :hostname}.cpu-*.cpu-steal.value"), :green), 'Idle'))
+          end.render.must_equal "<img src=\"http://my_graphite.host/render/?width=800&height=200&areaMode=stacked&from=-2hours&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'red'),'Steal')&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'green'),'Idle')\"/>"
+        end
       end
 
     end

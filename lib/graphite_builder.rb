@@ -3,20 +3,17 @@ require 'cgi'
 
 module Graphite
 
-  # Graphite::Builder.new(:hostname => 'foo') do
-  #   base 'http://my_graphite.host/render/'
-  #   width 800
-  #   height 200
-  #   areaMode :stacked
-  #   from '-2hours'
-  #   base_url 'http://localhost:8080/render/'
-  #   target(legend(color(sumSeries("#{data :hostname}.cpu-*.cpu-steal.value"), :red), 'Steal'))
-  #   target(legend(color(sumSeries("#{data :hostname}.cpu-*.cpu-steal.value"), :green), 'Idle'))
-  # end.render
+  # Encapsulates a small DSL for enabling the cut-n-paste of data from the graphite UI and interpolating/
+  # modifying them for inclusion in a server side template
   class Builder
 
+    # Raised when no targets are defined for a graph and #render is called
     class NoTargetsDefined < RuntimeError; end
-    class UnknownMethodFormat < RuntimeError; end
+
+    # Raised when we don't understand the function signature
+    # i.e. the user did something wrong or we need to implement the
+    # specific function signature
+    class UnknownFunctionSignature < RuntimeError; end
 
     def initialize(opts=nil, &block)
       @args = {}
@@ -70,7 +67,7 @@ module Graphite
       elsif args.length == 1
         @args[meth.to_sym] = args.first
       else
-        raise ::Graphite::Builder::UnknownMethodFormat.new("#{meth}(#{args.join(',')})")
+        raise ::Graphite::Builder::UnknownFunctionSignature.new("#{meth}(#{args.join(',')})")
       end
     end
 
