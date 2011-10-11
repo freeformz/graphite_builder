@@ -20,7 +20,7 @@ describe Graphite::Builder do
 
         describe 'whithout using data' do
           it 'should render the correct <img/> tag' do
-            Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+            Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
               target '1.2.3'
             end.render.must_equal '<img src="http://localhost/render?target=1.2.3"/>'
           end
@@ -28,7 +28,7 @@ describe Graphite::Builder do
 
         describe 'using data' do
           it 'should render the correct <img/> tag' do
-            Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+            Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
               target data :foo
               target "#{data :foo}.stuff"
             end.render.must_equal '<img src="http://localhost/render?target=bar&target=bar.stuff"/>'
@@ -37,7 +37,7 @@ describe Graphite::Builder do
           describe 'setting params' do
 
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 width 800
                 height 200
                 target 'a.b.c'
@@ -47,7 +47,7 @@ describe Graphite::Builder do
 
           describe 'and applying a "function"' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target data :foo
                 target color("#{data :foo}.stuff", 'red')
               end.render.must_equal "<img src=\"http://localhost/render?target=bar&target=color(bar.stuff,'red')\"/>"
@@ -56,7 +56,7 @@ describe Graphite::Builder do
 
           describe 'and nesting functions' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target data :foo
                 target legend(color("#{data :foo}.stuff", 'red'), 'foozle')
               end.render.must_equal "<img src=\"http://localhost/render?target=bar&target=alias(color(bar.stuff,'red'),'foozle')\"/>"
@@ -73,7 +73,7 @@ describe Graphite::Builder do
 
           describe 'with a single data point' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target sumSeries('a.b.*')
               end.render.must_equal "<img src=\"http://localhost/render?target=sumSeries(a.b.*)\"/>"
             end
@@ -81,7 +81,7 @@ describe Graphite::Builder do
 
           describe 'with multiple data points' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target sumSeries('a.b.*','a.c.*','a.d.*')
               end.render.must_equal "<img src=\"http://localhost/render?target=sumSeries(a.b.*,a.c.*,a.d.*)\"/>"
             end
@@ -93,7 +93,7 @@ describe Graphite::Builder do
           describe 'with a single argument' do
             it 'should raise an ArgumentError' do
               Proc.new do
-                Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+                Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                   target asPercent(1)
                 end.render
               end.must_raise ArgumentError
@@ -102,7 +102,7 @@ describe Graphite::Builder do
 
           describe 'with two arguments' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target asPercent('a.b.c','a.c.b')
               end.render.must_equal "<img src=\"http://localhost/render?target=asPercent(a.b.c,a.c.b)\"/>"
             end
@@ -113,7 +113,7 @@ describe Graphite::Builder do
 
           describe 'with a single argument' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target secondYAxis('a.b.c')
               end.render.must_equal "<img src=\"http://localhost/render?target=secondYAxis(a.b.c)\"/>"
             end
@@ -125,7 +125,7 @@ describe Graphite::Builder do
 
           describe 'with a single argument' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target stacked('a.b.c')
               end.render.must_equal "<img src=\"http://localhost/render?target=stacked(a.b.c)\"/>"
             end
@@ -137,7 +137,7 @@ describe Graphite::Builder do
 
           describe 'with a single argument' do
             it 'should render the correct <img/> tag' do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target legend('a.b.c','A B C')
               end.render.must_equal "<img src=\"http://localhost/render?target=alias(a.b.c,'A+B+C')\"/>"
             end
@@ -149,7 +149,7 @@ describe Graphite::Builder do
 
           it 'should raise an UnknownFunctionSignature exception' do
             Proc.new do
-              Graphite::Builder.new(base_url: 'http://localhost/render', foo: :bar) do
+              Graphite::Builder.new({base_url: 'http://localhost/render'}, {foo: :bar}) do
                 target blargen(1,2,3)
               end.render
             end.must_raise Graphite::Builder::UnknownFunctionSignature
@@ -162,8 +162,7 @@ describe Graphite::Builder do
       describe "some complex graphs" do
 
         it "should render the correct <img/> tag" do
-
-          Graphite::Builder.new(:hostname => 'foo') do
+          Graphite::Builder.new({},:hostname => 'foo') do
             base_url 'http://my_graphite.host/render/'
             width 800
             height 200

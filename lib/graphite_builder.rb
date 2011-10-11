@@ -15,11 +15,12 @@ module Graphite
     # specific function signature
     class UnknownFunctionSignature < RuntimeError; end
 
-    def initialize(opts=nil, &block)
-      @args = {}
+    # args are optional arguments for constructing the url
+    # opts are data to retrieve
+    def initialize(args={}, opts=nil, &block)
+      @args = args
       @targets = []
       data opts
-      @args[:base_url] = @data.delete(:base_url) if @data[:base_url]
       if block
         self.instance_eval(&block)
       end
