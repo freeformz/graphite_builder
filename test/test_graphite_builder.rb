@@ -42,7 +42,7 @@ describe Graphite::Builder do
                 width 800
                 height 200
                 target 'a.b.c'
-              end.render.must_equal "<img src=\"http://localhost/render?width=800&height=200&target=a.b.c\"/>"
+              end.render.must_equal "<img height=\"200\" width=\"800\" src=\"http://localhost/render?width=800&height=200&target=a.b.c\"/>"
             end
           end
 
@@ -174,7 +174,7 @@ describe Graphite::Builder do
             from '-2hours'
             target(legend(color(sumSeries("#{hostname}.cpu-*.cpu-steal.value"), :red), 'Steal'))
             target(legend(color(sumSeries("#{hostname}.cpu-*.cpu-steal.value"), :green), 'Idle'))
-          end.render.must_equal "<img src=\"http://my_graphite.host/render/?width=800&height=200&areaMode=stacked&from=-2hours&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'red'),'Steal')&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'green'),'Idle')\"/>"
+          end.render.must_equal "<img height=\"200\" width=\"800\" src=\"http://my_graphite.host/render/?width=800&height=200&areaMode=stacked&from=-2hours&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'red'),'Steal')&target=alias(color(sumSeries(foo.cpu-*.cpu-steal.value),'green'),'Idle')\"/>"
         end
 
 

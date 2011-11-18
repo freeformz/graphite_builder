@@ -60,7 +60,10 @@ module Graphite
 
     def render
       raise ::Graphite::Builder::NoTargetsDefined.new if @targets.empty?
-      '<img src="' <<
+      '<img ' <<
+      (@args.has_key?(:height) ? "height=\"#{@args[:height]}\" " : '') <<
+      (@args.has_key?(:width) ? "width=\"#{@args[:width]}\" " : '') <<
+      'src="' <<
       @args.delete(:base_url) << '?' <<
         (@args.map do |k ,v|
           if v.is_a?(Array)
