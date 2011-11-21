@@ -61,17 +61,20 @@ module Graphite
     def render
       raise ::Graphite::Builder::NoTargetsDefined.new if @targets.empty?
       '<img ' <<
-      (@args.has_key?(:height) ? "height=\"#{@args[:height]}\" " : '') <<
-      (@args.has_key?(:width) ? "width=\"#{@args[:width]}\" " : '') <<
-      'src="' <<
-      @args.delete(:base_url) << '?' <<
-        (@args.map do |k ,v|
-          if v.is_a?(Array)
-            v.map { |item| url_param(k, item) }.join("&")
-          else
-            url_param(k, v)
-          end
-        end + @targets.map {|target| "target=#{target}" }).join('&') << '"/>'
+        (@args.has_key?(:height) ? "height=\"#{@args[:height]}\" " : '') <<
+          (@args.has_key?(:width) ? "width=\"#{@args[:width]}\" " : '') <<
+            'src="' <<
+              @args.delete(:base_url) << 
+                '?' <<
+                  (@args.map do |k ,v|
+                    if v.is_a?(Array)
+                      v.map { |item| url_param(k, item) }.join("&")
+                    else
+                      url_param(k, v)
+                    end
+                  end <<
+                    @targets.map {|target| "target=#{target}" }).join('&') <<
+                      '"/>'
     end
 
     private
