@@ -16,6 +16,15 @@ describe Graphite::Builder do
         end
       end
 
+      describe 'when a format is defined' do
+        it 'should render the correct <img/> tag' do
+          Graphite::Builder.new(base_url: 'http://localhost/render') do
+            target :bar
+            format :svg
+          end.render.must_equal '<img src="http://localhost/render?format=svg&target=bar"/>'
+        end
+      end
+
       describe 'when a target is defined' do
 
         describe 'whithout using data' do

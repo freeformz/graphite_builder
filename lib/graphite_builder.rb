@@ -29,6 +29,10 @@ module Graphite
       @targets << value
     end
 
+    def format(value)
+      @args[:format] = value
+    end
+
     def sumSeries(*args)
       array_argument_wrapper('sumSeries', args)
     end
